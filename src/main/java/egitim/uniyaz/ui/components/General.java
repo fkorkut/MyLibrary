@@ -7,21 +7,13 @@ public class General extends VerticalLayout {
     public General() {
         KullaniciGirisView kullaniciGirisView=new KullaniciGirisView();
         addComponent(kullaniciGirisView);
-    //  if (girisYapildimi()){
-
-          Header header=new Header();
-          addComponent(header);
-
-          Container container=new Container(header);
-          addComponent(container);
-//      }
-//      else
-//          return;
+//        if(kullaniciGirisView.kullaniciKontrol()) {
+//            Header header = new Header();
+//            addComponent(header);
+//
+//            Container container = new Container(header);
+//            addComponent(container);
+//        }
     }
-//
-//    private boolean girisYapildimi() {
-//
-//
-//        return  false;
-//    }
+
 }
