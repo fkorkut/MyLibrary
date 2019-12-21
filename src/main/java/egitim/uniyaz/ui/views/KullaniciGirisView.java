@@ -16,7 +16,7 @@ public class KullaniciGirisView extends VerticalLayout {
     private  Button girisButon;
     Kullanici kullanici;
     public KullaniciGirisView() {
-       fillLayout();
+        fillLayout();
     }
 
     private void fillLayout() {
@@ -39,9 +39,7 @@ public class KullaniciGirisView extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 kullanici=girisKullanici();
-             //   int state=kullaniciKontrol(kullanici);
-             //   if(state==1) new AdminKitapEkleView();
-
+                kullaniciKontrol(kullanici);
             }
 
         });
@@ -50,12 +48,12 @@ public class KullaniciGirisView extends VerticalLayout {
 
     }
 
-    private int kullaniciKontrol(Kullanici kullanici) {
-        if (kullanici.getKullaniciState()== KullaniciState.ADMIN){
-            return 1;
+    public boolean kullaniciKontrol(Kullanici kontKullanici) {
+        if (kontKullanici.getKullaniciState()== KullaniciState.ADMIN){
+            return true;
         }
         else
-            return 2;
+            return false;
 
     }
 
