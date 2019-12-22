@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminKisiListele extends VerticalLayout {
-    FormLayout formLayout;
+
     private Table table;
     private IndexedContainer indexedContainer;
+    FormLayout formLayout=new FormLayout();
 
 
     public AdminKisiListele() {
@@ -22,8 +23,15 @@ public class AdminKisiListele extends VerticalLayout {
     }
 
     private  void createTable(){
-        table=new Table();
+        formLayout=new FormLayout();
+        formLayout.setMargin(true);
+        formLayout.addStyleName("outlined");
+        formLayout.setSizeFull();
+
+        table = new Table();
+
         indexedContainer=new IndexedContainer();
+
         indexedContainer.addContainerProperty("id",Long.class,null);
         indexedContainer.addContainerProperty("name",String.class,null);
 
@@ -32,16 +40,21 @@ public class AdminKisiListele extends VerticalLayout {
         table.setColumnHeaders("id","id");
         table.setColumnHeaders("name","name");
 
-       addComponent(table);
+        table.setPageLength(table.size());
+
+       formLayout.addComponent(table);
+       addComponent(formLayout);
     }
 
     private  void insertTable(){
 
         KullaniciDao kullaniciDao = new KullaniciDao();
+
         List<Kullanici> kullaniciList = kullaniciDao.findAllUye();
 
         for (Kullanici kullanici : kullaniciList) {
             Item item = indexedContainer.addItem(kullanici);
+
             item.getItemProperty("id").setValue(kullanici.getId());
             item.getItemProperty("name").setValue(kullanici.getName());
         }

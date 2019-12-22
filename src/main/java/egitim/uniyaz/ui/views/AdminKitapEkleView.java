@@ -16,8 +16,8 @@ public class AdminKitapEkleView extends VerticalLayout {
     TextField idField;
     ComboBox yazarCombo;
     TextField kitapText;
-    FormLayout formLayout;
-    List<Yazar> listYazar=new ArrayList<>();
+    List<Yazar> listYazar;
+    FormLayout formLayout=new FormLayout();
 
 
     public AdminKitapEkleView() {
@@ -26,29 +26,27 @@ public class AdminKitapEkleView extends VerticalLayout {
         fillLayout();
     }
 
-
-
-
-
     private void fillLayout() {
-
-        formLayout =new FormLayout();
+        formLayout=new FormLayout();
+        formLayout.setMargin(true);
+        formLayout.addStyleName("outlined");
+        formLayout.setSizeFull();
 
         idField = new TextField("Id");
         idField.setEnabled(false);
         formLayout.addComponent(idField);
 
 
-        yazarCombo= new ComboBox("Yazar",listYazar);
+        yazarCombo = new ComboBox("Yazar",listYazar);
         formLayout.addComponent(yazarCombo);
 
         kitapText = new TextField();
         kitapText.setDescription("Kitap Adı");
-        kitapText.setCaption("Kirap Adı");
+        kitapText.setCaption("Kitap Adı");
         kitapText.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
         formLayout.addComponent(kitapText);
 
-        Button ekleBtn=new Button();
+        Button ekleBtn = new Button();
         ekleBtn.setCaption("Ekle");
         ekleBtn.addClickListener(new Button.ClickListener() {
             @Override
@@ -58,9 +56,8 @@ public class AdminKitapEkleView extends VerticalLayout {
         });
         formLayout.addComponent(ekleBtn);
 
-
-
         addComponent(formLayout);
+
     }
 
     private void kitapEkle() {
@@ -70,15 +67,15 @@ public class AdminKitapEkleView extends VerticalLayout {
             idFieldValue = Long.parseLong(idField.getValue());
         }
         //alanlar alınır.
-        Yazar yazar= (Yazar) yazarCombo.getValue();
-        String kitapAdi=kitapText.getValue();
+        Yazar yazar = (Yazar) yazarCombo.getValue();
+        String kitapAdi = kitapText.getValue();
 
-        Kitap kitap=new Kitap();
+        Kitap kitap = new Kitap();
         kitap.setName(kitapAdi);
         kitap.setYazar(yazar);
 
-        KitapDao kitapDao=new KitapDao();
-        kitap= kitapDao.saveKitap(kitap);
+        KitapDao kitapDao = new KitapDao();
+        kitap = kitapDao.saveKitap(kitap);
         idField.setValue(kitap.getId().toString());
         Notification.show("İşlem Başarılı");
     }

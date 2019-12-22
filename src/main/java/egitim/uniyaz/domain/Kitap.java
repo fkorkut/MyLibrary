@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Kitap")
-public class Kitap {
+public class Kitap extends BaseDomain {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -19,7 +19,7 @@ public class Kitap {
     private String name;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_YAZAR", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "KITAP_YAZAR_ID"))
     private Yazar yazar;
 

@@ -23,7 +23,7 @@ public class KullaniciDao {
         String kullaniciParola=giriskullanici.getKullaniciParola();
 
         try (Session session = sessionFactory.openSession();) {
-            String hql = "Select kullanici from Kullanici kullanici where name = :name and kullaniciParola=:kullaniciParola";
+            String hql = "Select kullanici from Kullanici kullanici where name = :name and kullaniciParola = :kullaniciParola";
             Query query = session.createQuery(hql);
             query.setParameter("name", name);
             query.setParameter("kullaniciParola",kullaniciParola);

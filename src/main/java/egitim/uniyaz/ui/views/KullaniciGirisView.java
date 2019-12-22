@@ -5,15 +5,16 @@ import com.vaadin.ui.themes.ValoTheme;
 import egitim.uniyaz.MyUI;
 import egitim.uniyaz.dao.KullaniciDao;
 import egitim.uniyaz.domain.Kullanici;
-import egitim.uniyaz.domain.KullaniciState;
 import egitim.uniyaz.ui.components.General;
 
 public class KullaniciGirisView extends VerticalLayout {
 
     private TextField adTextField;
-    private TextField parolaTextField;
+    private PasswordField  parolaTextField;
     private  Button girisButon;
-    static Kullanici kullanici;
+    public static Kullanici kullanici;
+    FormLayout formLayout=new FormLayout();
+
 
     public Kullanici getKullanici() {
         return kullanici;
@@ -30,38 +31,46 @@ public class KullaniciGirisView extends VerticalLayout {
     }
 
     private void fillLayout() {
-        adTextField = new TextField();
-        adTextField.setDescription("adTextField");
-        adTextField.setCaption("Ad");
-        adTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
-        addComponent(adTextField);
 
-        parolaTextField = new TextField();
-        parolaTextField.setDescription("sifre");
-        parolaTextField.setCaption("sifre");
+        formLayout.setMargin(true);
+        formLayout.addStyleName("outlined");
+        formLayout.setSizeFull();
+
+        adTextField = new TextField();
+        adTextField.setCaption("Ad");
+        adTextField.setWidth(100.0f,Unit.PERCENTAGE);
+        adTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
+        formLayout.addComponent(adTextField);
+
+        parolaTextField = new PasswordField();
+        parolaTextField.setWidth(100.0f,Unit.PERCENTAGE);
+        parolaTextField.setCaption("Şifre");
         parolaTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
 
-        addComponent(parolaTextField);
+        formLayout.addComponent(parolaTextField);
 
-        girisButon=new Button();
+        girisButon = new Button();
         girisButon.setCaption("Giriş");
         girisButon.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-//                KullaniciKontrol kullaniciKontrol=new KullaniciKontrol();
-//                kullaniciKontrol.stateKontrol(kullanici);
-                kullanici=girisKullanici();
+
+                kullanici = girisKullanici();
+
                 if (kullanici == null){
                     Notification.show("Kullanıcı Kayıtlı değil !!");
+
                 }else{
-                    //stateKontrol();
+
                     General general = new General(kullanici);
                     MyUI.getCurrent().setContent(general);
                 }
             }
 
         });
-        addComponent(girisButon);
+        formLayout.addComponent(girisButon);
+
+        addComponent(formLayout);
 
 
     }
@@ -81,15 +90,5 @@ public class KullaniciGirisView extends VerticalLayout {
         }
     }
 
-//    public void stateKontrol() {
-//        if (KullaniciState.ADMIN.equals(kullanici.getKullaniciState())){
-//           isAdmin = true;
-//        }
-//        else
-//            isAdmin = false;
-//    }
-//
-//    public boolean isAdmin() {
-//        return isAdmin;
-//    }
+
 }

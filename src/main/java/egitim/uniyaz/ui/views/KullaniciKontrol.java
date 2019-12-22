@@ -17,11 +17,5 @@ public class KullaniciKontrol {
     public boolean isAdmin() {
         return isAdmin;
     }
-//    public void stateKontrol(Kullanici kullanici) {
-//        if (KullaniciState.ADMIN.equals(kullanici.getKullaniciState())){
-//            isAdmin = true;
-//        }
-//        else
-//            isAdmin = false;
-//    }
+
 }

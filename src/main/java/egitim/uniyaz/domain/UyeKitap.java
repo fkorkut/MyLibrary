@@ -3,25 +3,31 @@ package egitim.uniyaz.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "UyeKitap")
-public class UyeKitap {
+public class UyeKitap extends BaseDomain {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_KITAP", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "UYEKITAP_KITAP_ID"))
     private Kitap kitap;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_KULLANICI", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "UYEKITAP_KULLANICI_ID"))
     private Kullanici kullanici;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
     private KitapOkumaState kitapOkumaState;
+
+    private  long gun;
+
+
+    private Date baslangicTarihi;
 
     public KitapOkumaState getKitapOkumaState() {
         return kitapOkumaState;
@@ -39,15 +45,15 @@ public class UyeKitap {
         this.kullanici = kullanici;
     }
 
-    private  int gun;
-
-    public int getGun() {
-        return gun;
+     public Date getBaslangicTarihi() {
+        return baslangicTarihi;
     }
 
-    public void setGun(int gun) {
-        this.gun = gun;
+    public void setBaslangicTarihi(Date baslangicTarihi) {
+        this.baslangicTarihi = baslangicTarihi;
     }
+
+
 
     public Long getId() {
         return id;
@@ -64,6 +70,14 @@ public class UyeKitap {
 
     public void setKitap(Kitap kitap) {
         this.kitap = kitap;
+    }
+
+    public long getGun() {
+        return gun;
+    }
+
+    public void setGun(long gun) {
+        this.gun = gun;
     }
 
 

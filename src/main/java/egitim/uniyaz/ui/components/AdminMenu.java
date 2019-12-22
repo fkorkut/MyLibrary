@@ -3,20 +3,35 @@ package egitim.uniyaz.ui.components;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
+import egitim.uniyaz.MyUI;
+import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.ui.views.AdminKisiListele;
 import egitim.uniyaz.ui.views.AdminKitapEkleView;
+import egitim.uniyaz.ui.views.AdminYazarEkleView;
+import egitim.uniyaz.ui.views.KullaniciGirisView;
 
 public class AdminMenu extends HorizontalLayout {
+
     private Header header;
     private Content content;
 
-    MenuButton menuButton1;
-    MenuButton menuButton2;
-    HorizontalLayout buttonsLayout;
+
+    MenuButton yazarEkleBtn;
+    MenuButton kitapEkleBtn;
+    MenuButton kisileriListeleBtn;
+    MenuButton kullaniciBtn;
+
+
+
+
+    Kullanici kullanici = KullaniciGirisView.kullanici;
 
     public AdminMenu(Header header,Content content) {
         setHeight(100, Unit.PIXELS);
         setWidth(100, Unit.PERCENTAGE);
+
         this.header = header;
         this.content=content;
 
@@ -26,30 +41,56 @@ public class AdminMenu extends HorizontalLayout {
     }
 
     private void createButtons() {
-        buttonsLayout=new HorizontalLayout();
-        menuButton1=new MenuButton(FontAwesome.PLUS);
-        menuButton1.setCaption("Kitap Ekle");
-        menuButton1.addClickListener(new Button.ClickListener() {
+        yazarEkleBtn = new MenuButton(FontAwesome.PLUS);
+        yazarEkleBtn.setCaption("Yazar Ekle");
+        yazarEkleBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+
+                AdminYazarEkleView adminYazarEkleView = new AdminYazarEkleView();
+                content.setContent(adminYazarEkleView);
+
+            }
+        });
+        addComponent(yazarEkleBtn);
+
+
+        kitapEkleBtn = new MenuButton(FontAwesome.PLUS);
+        kitapEkleBtn.setCaption("Kitap Ekle");
+        kitapEkleBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+
                 AdminKitapEkleView adminKitapEkleView = new AdminKitapEkleView();
                 content.setContent(adminKitapEkleView);
             }
         });
-        buttonsLayout.addComponent(menuButton1);
+        addComponent(kitapEkleBtn);
 
-        menuButton2=new MenuButton(FontAwesome.PLUS);
-        menuButton2.setCaption("Kişileri Listele");
-        menuButton2.addClickListener(new Button.ClickListener() {
+        kisileriListeleBtn = new MenuButton(FontAwesome.LIST);
+        kisileriListeleBtn.setCaption("Kişileri Listele");
+        kisileriListeleBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+
                 AdminKisiListele adminKisiListele  = new AdminKisiListele();
                 content.setContent(adminKisiListele);
             }
         });
-        buttonsLayout.addComponent(menuButton2);
+        addComponent(kisileriListeleBtn);
 
-        addComponent(buttonsLayout);
+        kullaniciBtn = new MenuButton(FontAwesome.USER);
+        kullaniciBtn.setCaption(kullanici.getName() + " " + kullanici.getKullaniciState());
+        kullaniciBtn.setDescription("Çıkış yap");
+        kullaniciBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                //Çıkış
+            }
+        });
+       addComponent(kullaniciBtn);
+
+
 
     }
 
