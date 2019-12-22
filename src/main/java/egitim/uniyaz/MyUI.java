@@ -14,6 +14,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import egitim.uniyaz.ui.components.General;
+import egitim.uniyaz.ui.components.Header;
 import egitim.uniyaz.ui.views.KullaniciGirisView;
 import egitim.uniyaz.utils.HibernateUtil;
 
@@ -24,6 +25,7 @@ import egitim.uniyaz.utils.HibernateUtil;
 @Widgetset("egitim.uniyaz.MyAppWidgetset")
 public class MyUI extends UI {
 
+    private Header header;
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         KullaniciGirisView kullaniciGirisView = new KullaniciGirisView();
@@ -35,4 +37,12 @@ public class MyUI extends UI {
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
     }
+    public Header getHeader() {
+        return header;
+    }
+
+    public void setHeader(Header header) {
+        this.header = header;
+    }
+
 }
