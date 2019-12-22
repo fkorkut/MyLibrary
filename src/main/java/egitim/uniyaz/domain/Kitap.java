@@ -18,6 +18,19 @@ public class Kitap {
     @Size(max = 50)
     private String name;
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_YAZAR", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "KITAP_YAZAR_ID"))
+    private Yazar yazar;
+
+    public Yazar getYazar() {
+        return yazar;
+    }
+
+    public void setYazar(Yazar yazar) {
+        this.yazar = yazar;
+    }
+
     public Long getId() {
         return id;
     }

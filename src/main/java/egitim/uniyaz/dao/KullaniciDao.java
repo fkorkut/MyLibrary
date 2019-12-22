@@ -10,14 +10,14 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class KullaniciDao {
-    private SessionFactory sessionFactory;
-
-    public KullaniciDao() {
-        sessionFactory = HibernateUtil.getSessionFactory();
-    }
+//    private SessionFactory sessionFactory;
+//
+//    public KullaniciDao() {
+//        sessionFactory = HibernateUtil.getSessionFactory();
+//    }
 
     public Kullanici findKullanici(Kullanici giriskullanici) {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
         String name=giriskullanici.getName();
         String kullaniciParola=giriskullanici.getKullaniciParola();
@@ -25,6 +25,8 @@ public class KullaniciDao {
         try (Session session = sessionFactory.openSession();) {
             String hql = "Select kullanici from Kullanici kullanici where name = :name and kullaniciParola=:kullaniciParola";
             Query query = session.createQuery(hql);
+            query.setParameter("name", name);
+            query.setParameter("kullaniciParola",kullaniciParola);
             Kullanici kullanici=(Kullanici)query.uniqueResult();
             return kullanici;
 
@@ -33,5 +35,16 @@ public class KullaniciDao {
         }
         return null;
     }
-
+    public List<Kullanici> findAllUye() {
+        List<Kullanici> kullaniciList = null;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session session = sessionFactory.openSession();) {
+            String hql = "Select kullanici From Kullanici kullanici where  kullaniciState='UYE'";
+            Query query = session.createQuery(hql);
+            kullaniciList = query.list();//?
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return kullaniciList;
+    }
 }

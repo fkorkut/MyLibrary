@@ -16,9 +16,7 @@ public class Yazar extends BaseDomain{
     @Size(max = 50)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_KITAP", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "YAZAR_KITAP_ID"))
-    private Kitap kitap;
+
 
     public Long getId() {
         return id;

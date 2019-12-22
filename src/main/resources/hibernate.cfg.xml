@@ -19,7 +19,7 @@
         <mapping class="egitim.uniyaz.domain.Yazar" />
         <mapping class="egitim.uniyaz.domain.Kullanici" />
         <mapping class="egitim.uniyaz.domain.Kitap" />
-        <mapping class="egitim.uniyaz.domain.KullaniciKitaplar" />
+        <mapping class="egitim.uniyaz.domain.UyeKitap" />
 
 
 

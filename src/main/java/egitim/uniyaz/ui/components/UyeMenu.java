@@ -4,20 +4,19 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import egitim.uniyaz.ui.views.AdminKitapEkleView;
-import egitim.uniyaz.ui.views.KullaniciGirisView;
+import egitim.uniyaz.ui.views.UyeKitapSecView;
 
-public class Menu extends HorizontalLayout {
+public class UyeMenu  extends HorizontalLayout {
     private Header header;
     private Content content;
 
-    MenuButton menuButton1;
-    MenuButton menuButton2;
+
     MenuButton menuButton3;
     MenuButton menuButton4;
     MenuButton menuButton5;
     HorizontalLayout buttonsLayout;
 
-    public Menu(Header header,Content content) {
+    public UyeMenu(Header header,Content content) {
         setHeight(100, Unit.PIXELS);
         setWidth(100, Unit.PERCENTAGE);
         this.header = header;
@@ -30,41 +29,19 @@ public class Menu extends HorizontalLayout {
 
     private void createButtons() {
         buttonsLayout=new HorizontalLayout();
-        menuButton1=new MenuButton(FontAwesome.PLUS);
-        menuButton1.setCaption("Button1");
-        menuButton1.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                AdminKitapEkleView adminKitapEkleView = new AdminKitapEkleView();
-                content.setContent(adminKitapEkleView);
-            }
-        });
-        buttonsLayout.addComponent(menuButton1);
-
-        menuButton2=new MenuButton(FontAwesome.PLUS);
-        menuButton2.setCaption("Button2");
-        menuButton2.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-
-            }
-        });
-        buttonsLayout.addComponent(menuButton2);
-
-
         menuButton3=new MenuButton(FontAwesome.PLUS);
-        menuButton3.setCaption("Button3");
+        menuButton3.setCaption("Kutuphaneme Kitap Ekle");
         menuButton3.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-
+                UyeKitapSecView uyeKitapSecView=new UyeKitapSecView();
+                content.setContent(uyeKitapSecView);
             }
         });
         buttonsLayout.addComponent(menuButton3);
 
-
         menuButton4=new MenuButton(FontAwesome.PLUS);
-        menuButton4.setCaption("Button4");
+        menuButton4.setCaption("Kitaplarımı Güncelle");
         menuButton4.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -89,3 +66,4 @@ public class Menu extends HorizontalLayout {
     }
 
 }
+

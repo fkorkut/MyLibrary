@@ -2,29 +2,39 @@ package egitim.uniyaz.ui.views;
 
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import egitim.uniyaz.MyUI;
 import egitim.uniyaz.dao.KullaniciDao;
 import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.domain.KullaniciState;
-
-import java.util.ArrayList;
-import java.util.List;
+import egitim.uniyaz.ui.components.General;
 
 public class KullaniciGirisView extends VerticalLayout {
 
-    private TextField emailTextField;
+    private TextField adTextField;
     private TextField parolaTextField;
     private  Button girisButon;
-    Kullanici kullanici;
+    static Kullanici kullanici;
+
+    public Kullanici getKullanici() {
+        return kullanici;
+    }
+
+    public void setKullanici(Kullanici kullanici) {
+        this.kullanici = kullanici;
+    }
+
+    private boolean isAdmin = false;
+
     public KullaniciGirisView() {
         fillLayout();
     }
 
     private void fillLayout() {
-        emailTextField = new TextField();
-        emailTextField.setDescription("emailTextField");
-        emailTextField.setCaption("Ad");
-        emailTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
-        addComponent(emailTextField);
+        adTextField = new TextField();
+        adTextField.setDescription("adTextField");
+        adTextField.setCaption("Ad");
+        adTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
+        addComponent(adTextField);
 
         parolaTextField = new TextField();
         parolaTextField.setDescription("sifre");
@@ -34,12 +44,20 @@ public class KullaniciGirisView extends VerticalLayout {
         addComponent(parolaTextField);
 
         girisButon=new Button();
-        girisButon.setCaption("Normal");
+        girisButon.setCaption("Giriş");
         girisButon.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+//                KullaniciKontrol kullaniciKontrol=new KullaniciKontrol();
+//                kullaniciKontrol.stateKontrol(kullanici);
                 kullanici=girisKullanici();
-                kullaniciKontrol(kullanici);
+                if (kullanici == null){
+                    Notification.show("Kullanıcı Kayıtlı değil !!");
+                }else{
+                    //stateKontrol();
+                    General general = new General(kullanici);
+                    MyUI.getCurrent().setContent(general);
+                }
             }
 
         });
@@ -47,18 +65,8 @@ public class KullaniciGirisView extends VerticalLayout {
 
 
     }
-
-    public boolean kullaniciKontrol(Kullanici kontKullanici) {
-        if (kontKullanici.getKullaniciState()== KullaniciState.ADMIN){
-            return true;
-        }
-        else
-            return false;
-
-    }
-
     private Kullanici girisKullanici() {
-        String email=emailTextField.getValue();
+        String email=adTextField.getValue();
         String parola=parolaTextField.getValue();
 
         Kullanici kullanici=new Kullanici();
@@ -73,6 +81,15 @@ public class KullaniciGirisView extends VerticalLayout {
         }
     }
 
-
-
+//    public void stateKontrol() {
+//        if (KullaniciState.ADMIN.equals(kullanici.getKullaniciState())){
+//           isAdmin = true;
+//        }
+//        else
+//            isAdmin = false;
+//    }
+//
+//    public boolean isAdmin() {
+//        return isAdmin;
+//    }
 }

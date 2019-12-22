@@ -2,49 +2,85 @@ package egitim.uniyaz.ui.views;
 
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import egitim.uniyaz.dao.KitapDao;
+import egitim.uniyaz.dao.YazarDao;
+import egitim.uniyaz.domain.Kitap;
+import egitim.uniyaz.domain.Yazar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AdminKitapEkleView extends VerticalLayout {
 
+    TextField idField;
+    ComboBox yazarCombo;
+    TextField kitapText;
     FormLayout formLayout;
+    List<Yazar> listYazar=new ArrayList<>();
+
 
     public AdminKitapEkleView() {
-       fillLayout();
+        YazarDao yazarDao = new YazarDao();
+        listYazar = yazarDao.findAllYazar();
+        fillLayout();
     }
 
+
+
+
+
     private void fillLayout() {
+
         formLayout =new FormLayout();
+
+        idField = new TextField("Id");
+        idField.setEnabled(false);
+        formLayout.addComponent(idField);
+
+
+        yazarCombo= new ComboBox("Yazar",listYazar);
+        formLayout.addComponent(yazarCombo);
+
+        kitapText = new TextField();
+        kitapText.setDescription("Kitap Adı");
+        kitapText.setCaption("Kirap Adı");
+        kitapText.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
+        formLayout.addComponent(kitapText);
+
+        Button ekleBtn=new Button();
+        ekleBtn.setCaption("Ekle");
+        ekleBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                kitapEkle();
+            }
+        });
+        formLayout.addComponent(ekleBtn);
+
+
+
         addComponent(formLayout);
+    }
 
-        Label textLabel1 = new Label("Label kısmı");
-        textLabel1.addStyleName(ValoTheme.LABEL_BOLD);
-        formLayout.addComponent(textLabel1);
+    private void kitapEkle() {
 
-        TextField textField2 = new TextField();
-        textField2.setDescription("DenemeDesc");
-        textField2.setCaption("Deneme");
-        textField2.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
-        formLayout.addComponent(textField2);
+        Long idFieldValue = null;
+        if (idField.getValue() != "") {
+            idFieldValue = Long.parseLong(idField.getValue());
+        }
+        //alanlar alınır.
+        Yazar yazar= (Yazar) yazarCombo.getValue();
+        String kitapAdi=kitapText.getValue();
 
-        Button button1=new Button();
-        button1.setCaption("Normal");
-        formLayout.addComponent(button1);
+        Kitap kitap=new Kitap();
+        kitap.setName(kitapAdi);
+        kitap.setYazar(yazar);
 
-        DateField dateField1=new DateField("Tarih");
-        formLayout.addComponent(dateField1);
-
-        List<String> list1=new ArrayList<>();
-        list1.add("List1");
-        list1.add("List2");
-        ComboBox comboBox=new ComboBox("Liste",list1);
-        formLayout.addComponent(comboBox);
-
-        CheckBox checkbox1 = new CheckBox("ChechBox");
-        formLayout.addComponent(checkbox1);
-
-        addComponent(formLayout);
+        KitapDao kitapDao=new KitapDao();
+        kitap= kitapDao.saveKitap(kitap);
+        idField.setValue(kitap.getId().toString());
+        Notification.show("İşlem Başarılı");
     }
 
 

@@ -14,6 +14,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import egitim.uniyaz.ui.components.General;
+import egitim.uniyaz.ui.views.KullaniciGirisView;
 import egitim.uniyaz.utils.HibernateUtil;
 
 /**
@@ -25,10 +26,9 @@ public class MyUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        General general=new General();
-        setContent(general);
+        KullaniciGirisView kullaniciGirisView = new KullaniciGirisView();
+        setContent(kullaniciGirisView);
         HibernateUtil.getSessionFactory();
-
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
