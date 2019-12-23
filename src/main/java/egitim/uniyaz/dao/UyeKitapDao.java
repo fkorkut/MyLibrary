@@ -78,6 +78,7 @@ public class UyeKitapDao {
         List<UyeKitap> uyeKitapList = null;
 
         Long kullaniciId=kullanici.getId();
+
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession();) {
             String hql = "Select uyeKitap From UyeKitap uyeKitap where  ID_KULLANICI=:ID_KULLANICI and kitapOkumaState='OKUDUM'";

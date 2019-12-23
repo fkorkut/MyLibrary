@@ -26,11 +26,12 @@ import egitim.uniyaz.utils.HibernateUtil;
 public class MyUI extends UI {
 
     private Header header;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         KullaniciGirisView kullaniciGirisView = new KullaniciGirisView();
         setContent(kullaniciGirisView);
-        HibernateUtil.getSessionFactory();
+      //  HibernateUtil.getSessionFactory();
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

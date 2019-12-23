@@ -61,7 +61,6 @@ public class KullaniciGirisView extends VerticalLayout {
                     Notification.show("Kullanıcı Kayıtlı değil !!");
 
                 }else{
-
                     General general = new General(kullanici);
                     MyUI.getCurrent().setContent(general);
                 }

@@ -10,11 +10,6 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class KullaniciDao {
-//    private SessionFactory sessionFactory;
-//
-//    public KullaniciDao() {
-//        sessionFactory = HibernateUtil.getSessionFactory();
-//    }
 
     public Kullanici findKullanici(Kullanici giriskullanici) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

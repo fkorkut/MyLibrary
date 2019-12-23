@@ -85,7 +85,8 @@ public class AdminMenu extends HorizontalLayout {
         kullaniciBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                //Çıkış
+                KullaniciGirisView kullaniciGirisView = new KullaniciGirisView();
+                MyUI.getCurrent().setContent(kullaniciGirisView);
             }
         });
        addComponent(kullaniciBtn);

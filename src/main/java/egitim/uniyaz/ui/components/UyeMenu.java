@@ -5,6 +5,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
+import egitim.uniyaz.MyUI;
 import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.ui.views.*;
 
@@ -73,7 +74,8 @@ public class UyeMenu  extends HorizontalLayout {
         kullaniciBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                //çıkış
+                KullaniciGirisView kullaniciGirisView = new KullaniciGirisView();
+                MyUI.getCurrent().setContent(kullaniciGirisView);
             }
         });
         addComponent(kullaniciBtn);
