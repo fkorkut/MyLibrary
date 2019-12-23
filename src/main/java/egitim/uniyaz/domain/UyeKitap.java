@@ -1,11 +1,15 @@
 package egitim.uniyaz.domain;
 
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+
 @Entity
+@Audited
 @Table(name = "UyeKitap")
 public class UyeKitap extends BaseDomain {
     @Id
@@ -53,8 +57,6 @@ public class UyeKitap extends BaseDomain {
         this.baslangicTarihi = baslangicTarihi;
     }
 
-
-
     public Long getId() {
         return id;
     }
@@ -62,7 +64,6 @@ public class UyeKitap extends BaseDomain {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public Kitap getKitap() {
         return kitap;

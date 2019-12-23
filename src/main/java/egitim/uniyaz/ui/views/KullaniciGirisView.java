@@ -1,20 +1,25 @@
 package egitim.uniyaz.ui.views;
 
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.data.util.ObjectProperty;
+import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import egitim.uniyaz.MyUI;
 import egitim.uniyaz.dao.KullaniciDao;
 import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.ui.components.General;
 
+import javax.xml.ws.BindingType;
+
 public class KullaniciGirisView extends VerticalLayout {
+
 
     private TextField adTextField;
     private PasswordField  parolaTextField;
     private  Button girisButon;
     public static Kullanici kullanici;
     FormLayout formLayout=new FormLayout();
-
 
     public Kullanici getKullanici() {
         return kullanici;
@@ -30,11 +35,12 @@ public class KullaniciGirisView extends VerticalLayout {
         fillLayout();
     }
 
-    private void fillLayout() {
+    private void fillLayout()  {
 
         formLayout.setMargin(true);
         formLayout.addStyleName("outlined");
         formLayout.setSizeFull();
+
 
         adTextField = new TextField();
         adTextField.setCaption("Ad");
