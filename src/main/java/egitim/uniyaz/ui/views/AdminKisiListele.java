@@ -17,7 +17,7 @@ public class AdminKisiListele extends VerticalLayout {
     ComboBox kisiCombo;
     private Table table;
     private IndexedContainer indexedContainer;
-    FormLayout formLayout = new FormLayout();
+    FormLayout formLayout;
     List<Kullanici> listKullanici;
     Kullanici kullanici;
 

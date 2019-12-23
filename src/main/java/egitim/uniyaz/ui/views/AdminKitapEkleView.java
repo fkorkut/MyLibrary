@@ -7,9 +7,7 @@ import egitim.uniyaz.dao.YazarDao;
 import egitim.uniyaz.domain.Kitap;
 import egitim.uniyaz.domain.Yazar;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class AdminKitapEkleView extends VerticalLayout {
 
