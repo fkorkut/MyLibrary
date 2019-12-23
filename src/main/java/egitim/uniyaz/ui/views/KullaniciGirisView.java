@@ -39,14 +39,11 @@ public class KullaniciGirisView extends VerticalLayout {
         adTextField = new TextField();
         adTextField.setCaption("Ad");
         adTextField.setWidth(100.0f,Unit.PERCENTAGE);
-        adTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
         formLayout.addComponent(adTextField);
 
         parolaTextField = new PasswordField();
         parolaTextField.setWidth(100.0f,Unit.PERCENTAGE);
         parolaTextField.setCaption("Şifre");
-        parolaTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
-
         formLayout.addComponent(parolaTextField);
 
         girisButon = new Button();
