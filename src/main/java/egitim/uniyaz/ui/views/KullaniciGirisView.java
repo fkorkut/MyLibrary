@@ -2,37 +2,41 @@ package egitim.uniyaz.ui.views;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
-import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.data.util.PropertysetItem;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 import egitim.uniyaz.MyUI;
 import egitim.uniyaz.dao.KullaniciDao;
 import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.ui.components.General;
 
-import javax.xml.ws.BindingType;
 
 public class KullaniciGirisView extends VerticalLayout {
 
-
+    @PropertyId("name")
     private TextField adTextField;
+
+    @PropertyId("kullaniciParola")
     private PasswordField  parolaTextField;
+
     private  Button girisButon;
-    public static Kullanici kullanici;
+
     FormLayout formLayout=new FormLayout();
 
-    public Kullanici getKullanici() {
-        return kullanici;
-    }
-
-    public void setKullanici(Kullanici kullanici) {
-        this.kullanici = kullanici;
-    }
-
-    private boolean isAdmin = false;
+    private FieldGroup binder;
+    private BeanItem<Kullanici> item;
+    public static Kullanici kullanici;
 
     public KullaniciGirisView() {
         fillLayout();
+        fillViewKullanici(new Kullanici());
+
+    }
+
+
+    private void fillViewKullanici(Kullanici kullanici) {
+        item = new BeanItem<Kullanici>(kullanici);
+        binder = new FieldGroup(item);
+        binder.bindMemberFields(this);
     }
 
     private void fillLayout()  {
@@ -64,6 +68,7 @@ public class KullaniciGirisView extends VerticalLayout {
                     Notification.show("Kullanıcı Kayıtlı değil !!");
 
                 }else{
+
                     General general = new General(kullanici);
                     MyUI.getCurrent().setContent(general);
                 }
@@ -77,18 +82,19 @@ public class KullaniciGirisView extends VerticalLayout {
 
     }
     private Kullanici girisKullanici() {
-        String email=adTextField.getValue();
-        String parola=parolaTextField.getValue();
 
-        Kullanici kullanici=new Kullanici();
-        kullanici.setName(email);
-        kullanici.setKullaniciParola(parola);
-        try{
+        try {
+
+            binder.commit();
+            Kullanici kullanici = item.getBean();
+
             KullaniciDao kullaniciDao=new KullaniciDao();
             kullanici=kullaniciDao.findKullanici(kullanici);
             return kullanici;
-        }catch (Exception e){
-            return null;
+
+        } catch (FieldGroup.CommitException e) {
+            System.out.println(e.getMessage());
+            return  null;
         }
     }
 
