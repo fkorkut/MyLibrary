@@ -1,10 +1,14 @@
 package egitim.uniyaz.ui.views;
 
 import com.vaadin.data.Item;
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.*;
 import egitim.uniyaz.dao.KullaniciDao;
 import egitim.uniyaz.dao.UyeKitapDao;
+import egitim.uniyaz.domain.Kitap;
 import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.domain.UyeKitap;
 
@@ -14,16 +18,33 @@ import java.util.List;
 
 public class AdminKisiListele extends VerticalLayout {
 
+    @PropertyId("kullanici")
     ComboBox kisiCombo;
+
     private Table table;
+
     private IndexedContainer indexedContainer;
     FormLayout formLayout;
     List<Kullanici> listKullanici;
     Kullanici kullanici;
 
-
+    private FieldGroup binder;
+    private BeanItem<UyeKitap> item;
 
     public AdminKisiListele() {
+        fillLayout();
+        fillViewKullanici(new UyeKitap());
+    }
+
+
+    private void fillViewKullanici(UyeKitap uyeKitap) {
+        item = new BeanItem<UyeKitap>(uyeKitap);
+        binder = new FieldGroup(item);
+        binder.bindMemberFields(this);
+    }
+
+
+    private void fillLayout() {
         formLayout=new FormLayout();
         formLayout.setMargin(true);
         formLayout.addStyleName("outlined");
@@ -41,7 +62,6 @@ public class AdminKisiListele extends VerticalLayout {
         ekleBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-
                     kullanici = (Kullanici) kisiCombo.getValue();
                     createTable();
                     insertTable();
@@ -70,17 +90,26 @@ public class AdminKisiListele extends VerticalLayout {
     }
 
     private  void insertTable(){
-        UyeKitapDao uyeKitapDao = new UyeKitapDao();
-        List<UyeKitap> uyeKitapList = uyeKitapDao.findAllKitapByKullanici(kullanici);
 
-        for (UyeKitap uyeKitap : uyeKitapList) {
+        try {
+            binder.commit();
+            UyeKitap uyeKitap1= item.getBean();
+            kullanici=uyeKitap1.getKullanici();
+            UyeKitapDao uyeKitapDao = new UyeKitapDao();
+            List<UyeKitap> uyeKitapList = uyeKitapDao.findAllKitapByKullanici(kullanici);
 
-            Item item = indexedContainer.addItem(uyeKitap);
+            for (UyeKitap uyeKitap : uyeKitapList) {
 
-            item.getItemProperty("kitapAdi").setValue(uyeKitap.getKitap().getName());
-            item.getItemProperty("gun").setValue(uyeKitap.getGun());
-            item.getItemProperty("Baslangic").setValue(uyeKitap.getBaslangicTarihi());
+                Item item = indexedContainer.addItem(uyeKitap);
 
+                item.getItemProperty("kitapAdi").setValue(uyeKitap.getKitap().getName());
+                item.getItemProperty("gun").setValue(uyeKitap.getGun());
+                item.getItemProperty("Baslangic").setValue(uyeKitap.getBaslangicTarihi());
+
+            }
+        } catch (FieldGroup.CommitException e) {
+            e.printStackTrace();
         }
+
     }
 }
