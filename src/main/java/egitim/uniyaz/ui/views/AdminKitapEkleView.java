@@ -1,5 +1,8 @@
 package egitim.uniyaz.ui.views;
 
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import egitim.uniyaz.dao.KitapDao;
@@ -11,18 +14,39 @@ import java.util.List;
 
 public class AdminKitapEkleView extends VerticalLayout {
 
+    @PropertyId("id")
     TextField idField;
+
+    @PropertyId("yazar")
     ComboBox yazarCombo;
+
+    @PropertyId("name")
     TextField kitapText;
+
     List<Yazar> listYazar;
     FormLayout formLayout=new FormLayout();
 
+    private FieldGroup binder;
+    private BeanItem<Kitap> item;
+
 
     public AdminKitapEkleView() {
+        yazarList();
+        fillLayout();
+        fillViewKitap(new Kitap());
+    }
+
+    private void fillViewKitap(Kitap kitap) {
+        item = new BeanItem<Kitap>(kitap);
+        binder = new FieldGroup(item);
+        binder.bindMemberFields(this);
+    }
+
+    private void yazarList() {
         YazarDao yazarDao = new YazarDao();
         listYazar = yazarDao.findAllYazar();
-        fillLayout();
     }
+
 
     private void fillLayout() {
         formLayout=new FormLayout();
@@ -59,23 +83,20 @@ public class AdminKitapEkleView extends VerticalLayout {
     }
 
     private void kitapEkle() {
+        try {
 
-        Long idFieldValue = null;
-        if (idField.getValue() != "") {
-            idFieldValue = Long.parseLong(idField.getValue());
+            binder.commit();
+            Kitap kitap = item.getBean();
+
+            KitapDao kitapDao = new KitapDao();
+            kitap = kitapDao.saveKitap(kitap);
+            idField.setValue(kitap.getId().toString());
+
+            Notification.show("İşlem Başarılı");
+
+        } catch (FieldGroup.CommitException e) {
+            System.out.println(e.getMessage());
         }
-        //alanlar alınır.
-        Yazar yazar = (Yazar) yazarCombo.getValue();
-        String kitapAdi = kitapText.getValue();
-
-        Kitap kitap = new Kitap();
-        kitap.setName(kitapAdi);
-        kitap.setYazar(yazar);
-
-        KitapDao kitapDao = new KitapDao();
-        kitap = kitapDao.saveKitap(kitap);
-        idField.setValue(kitap.getId().toString());
-        Notification.show("İşlem Başarılı");
     }
 
 

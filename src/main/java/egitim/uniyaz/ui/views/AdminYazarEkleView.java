@@ -1,20 +1,38 @@
 package egitim.uniyaz.ui.views;
 
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import egitim.uniyaz.dao.KullaniciDao;
 import egitim.uniyaz.dao.YazarDao;
+import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.domain.Yazar;
 
 
 public class AdminYazarEkleView extends VerticalLayout {
 
+    @PropertyId("id")
     TextField idField;
+
+    @PropertyId("name")
     TextField yazarText;
+
     FormLayout formLayout=new FormLayout();
+    private FieldGroup binder;
+    private BeanItem<Yazar> item;
 
     public AdminYazarEkleView() {
 
         fillLayout();
+        fillViewYazar(new Yazar());
+    }
+
+    private void fillViewYazar(Yazar yazar) {
+        item = new BeanItem<Yazar>(yazar);
+        binder = new FieldGroup(item);
+        binder.bindMemberFields(this);
     }
 
     private void fillLayout() {
@@ -54,16 +72,22 @@ public class AdminYazarEkleView extends VerticalLayout {
             idFieldValue = Long.parseLong(idField.getValue());
         }
 
-        Yazar yazar = new Yazar();
-        String yazarAdi = yazarText.getValue();
-        yazar.setName(yazarAdi);
+        try {
+
+            binder.commit();
+            Yazar yazar = item.getBean();
+
+            YazarDao yazarDao = new YazarDao();
+            yazar = yazarDao.saveYazar(yazar);
+            idField.setValue(yazar.getId().toString());
+            Notification.show("İşlem Başarılı");
 
 
-        YazarDao yazarDao = new YazarDao();
-        yazar = yazarDao.saveYazar(yazar);
-        idField.setValue(yazar.getId().toString());
-        Notification.show("İşlem Başarılı");
+        } catch (FieldGroup.CommitException e) {
+            System.out.println(e.getMessage());
+
+        }
+
+
     }
-
-
 }
