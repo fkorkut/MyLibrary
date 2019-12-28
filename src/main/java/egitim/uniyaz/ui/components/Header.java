@@ -1,12 +1,8 @@
 package egitim.uniyaz.ui.components;
 
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import egitim.uniyaz.MyUI;
-import egitim.uniyaz.domain.Kullanici;
-import egitim.uniyaz.ui.views.KullaniciGirisView;
 
 public class Header extends VerticalLayout {
 

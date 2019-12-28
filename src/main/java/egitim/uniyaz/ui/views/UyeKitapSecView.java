@@ -12,21 +12,22 @@ import java.util.List;
 
 public class UyeKitapSecView extends VerticalLayout {
 
-    TextField idField;
+    private TextField idField;
 
     @PropertyId("kitap")
-    ComboBox kitapCombo;
+    private ComboBox kitapCombo;
 
-    FormLayout formLayout;
-    List<Kitap> listKitap;
-
+    private FormLayout formLayout;
+    private List<Kitap> listKitap;
 
     public UyeKitapSecView() {
-
-        KitapDao KitapDao = new KitapDao();
-        listKitap = KitapDao.findAllKitap();
         fillLayout();
         addComponent(formLayout);
+    }
+
+    private void kitapList() {
+        KitapDao KitapDao = new KitapDao();
+        listKitap = KitapDao.findAllKitap();
     }
 
     private void fillLayout() {
@@ -39,10 +40,9 @@ public class UyeKitapSecView extends VerticalLayout {
         idField.setEnabled(false);
         formLayout.addComponent(idField);
 
-
+        kitapList();
         kitapCombo= new ComboBox("Kitap",listKitap);
         formLayout.addComponent(kitapCombo);
-
 
         Button ekleBtn=new Button();
         ekleBtn.setCaption("Ekle");
@@ -56,15 +56,8 @@ public class UyeKitapSecView extends VerticalLayout {
     }
 
     private void kitapEkle() {
-
-        Long idFieldValue = null;
-        if (idField.getValue() != "") {
-            idFieldValue = Long.parseLong(idField.getValue());
-        }
         //alanlar alınır.
         Kitap kitap = (Kitap) kitapCombo.getValue();
-
-
         UyeKitap uyeKitap = new UyeKitap();
 
         uyeKitap.setKitap(kitap);

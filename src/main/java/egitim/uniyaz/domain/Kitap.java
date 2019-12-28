@@ -22,7 +22,7 @@ public class Kitap extends BaseDomain {
     private String name;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_YAZAR", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "KITAP_YAZAR_ID"))
     private Yazar yazar;
 

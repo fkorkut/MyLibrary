@@ -5,21 +5,19 @@ import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import egitim.uniyaz.dao.KullaniciDao;
 import egitim.uniyaz.dao.YazarDao;
-import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.domain.Yazar;
 
 
 public class AdminYazarEkleView extends VerticalLayout {
 
     @PropertyId("id")
-    TextField idField;
+    private TextField idField;
 
     @PropertyId("name")
-    TextField yazarText;
+    private TextField yazarText;
 
-    FormLayout formLayout=new FormLayout();
+    private FormLayout formLayout;
     private FieldGroup binder;
     private BeanItem<Yazar> item;
 
@@ -36,7 +34,7 @@ public class AdminYazarEkleView extends VerticalLayout {
     }
 
     private void fillLayout() {
-        formLayout=new FormLayout();
+        formLayout = new FormLayout();
         formLayout.setMargin(true);
         formLayout.addStyleName("outlined");
         formLayout.setSizeFull();
@@ -66,12 +64,6 @@ public class AdminYazarEkleView extends VerticalLayout {
     }
 
     private void yazarEkle() {
-
-        Long idFieldValue = null;
-        if (idField.getValue() != "") {
-            idFieldValue = Long.parseLong(idField.getValue());
-        }
-
         try {
 
             binder.commit();
@@ -82,12 +74,10 @@ public class AdminYazarEkleView extends VerticalLayout {
             idField.setValue(yazar.getId().toString());
             Notification.show("İşlem Başarılı");
 
-
         } catch (FieldGroup.CommitException e) {
             System.out.println(e.getMessage());
 
         }
-
 
     }
 }

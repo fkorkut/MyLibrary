@@ -4,16 +4,12 @@ import com.vaadin.ui.VerticalLayout;
 
 public class UyeForm extends VerticalLayout {
 
-    private Header header;
-
-    public UyeForm(Header header) {
-
-        this.header = header;
+    public UyeForm() {
         setWidth(100,Unit.PERCENTAGE);
 
         Content content=new Content();
 
-        UyeMenu menu = new UyeMenu(header,content);
+        UyeMenu menu = new UyeMenu(content);
         addComponent(menu);
 
         addComponent(content);

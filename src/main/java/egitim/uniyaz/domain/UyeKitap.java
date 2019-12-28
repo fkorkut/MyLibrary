@@ -16,11 +16,11 @@ public class UyeKitap extends BaseDomain {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_KITAP", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "UYEKITAP_KITAP_ID"))
     private Kitap kitap;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_KULLANICI", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "UYEKITAP_KULLANICI_ID"))
     private Kullanici kullanici;
 

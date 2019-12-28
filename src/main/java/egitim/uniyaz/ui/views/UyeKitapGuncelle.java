@@ -17,14 +17,13 @@ public class UyeKitapGuncelle extends VerticalLayout {
 
     private Table table;
     private IndexedContainer indexedContainer;
-
-    FormLayout formLayout;
+    private FormLayout formLayout;
 
     private FieldGroup binder;
     private BeanItem<UyeKitap> item;
     private ComboBox okumaStateCombo;
 
-private  UyeKitap uyeKitap;
+    private  UyeKitap uyeKitap;
     Kullanici kullanici = KullaniciGirisView.kullanici;
 
     public UyeKitapGuncelle() {
@@ -83,32 +82,31 @@ private  UyeKitap uyeKitap;
                 }
 
             }
-//
     }
 
     private  void createButton(){
-        Button button1=new Button();
-        button1.setCaption("Güncelle");
-        button1.addClickListener(new Button.ClickListener() {
+        Button button = new Button();
+        button.setCaption("Güncelle");
+        button.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 updateButton();
                 UyeKitapDao uyeKitapDao=new UyeKitapDao();
-                uyeKitap=uyeKitapDao.updateUyeKitap(uyeKitap);
+                uyeKitap = uyeKitapDao.saveUyeKitap(uyeKitap);
             }
         });
-        formLayout.addComponent(button1);
+        formLayout.addComponent(button);
     }
 
     private void updateButton() {
 
            KitapOkumaState sonuc= (KitapOkumaState) okumaStateCombo.getValue();
-            if (sonuc==KitapOkumaState.OkumayaBasladim){
+            if (KitapOkumaState.Basladim.equals(sonuc)){
                 uyeKitap.setKitapOkumaState(sonuc);
                 Date now = new Date();
                 uyeKitap.setBaslangicTarihi(now);
             }
-            else if (sonuc==KitapOkumaState.Okudum){
+            else if (KitapOkumaState.Okudum.equals(sonuc)){
                 uyeKitap.setKitapOkumaState(sonuc);
                 Date now = new Date();
                 if(uyeKitap.getBaslangicTarihi()!=null){
@@ -130,7 +128,5 @@ private  UyeKitap uyeKitap;
         okumaStateCombo.setWidth(30, Unit.PERCENTAGE);
         formLayout.addComponent(okumaStateCombo);
     }
-
-
 
 }

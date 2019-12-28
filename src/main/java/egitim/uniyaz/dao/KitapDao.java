@@ -1,7 +1,6 @@
 package egitim.uniyaz.dao;
 
 import egitim.uniyaz.domain.Kitap;
-import egitim.uniyaz.domain.Yazar;
 import egitim.uniyaz.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

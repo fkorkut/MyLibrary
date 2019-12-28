@@ -8,11 +8,9 @@ import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.*;
 import egitim.uniyaz.dao.KullaniciDao;
 import egitim.uniyaz.dao.UyeKitapDao;
-import egitim.uniyaz.domain.Kitap;
 import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.domain.UyeKitap;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +22,9 @@ public class AdminKisiListele extends VerticalLayout {
     private Table table;
 
     private IndexedContainer indexedContainer;
-    FormLayout formLayout;
-    List<Kullanici> listKullanici;
-    Kullanici kullanici;
+    private FormLayout formLayout;
+    private List<Kullanici> listKullanici;
+    private Kullanici kullanici;
 
     private FieldGroup binder;
     private BeanItem<UyeKitap> item;
@@ -36,25 +34,26 @@ public class AdminKisiListele extends VerticalLayout {
         fillViewKullanici(new UyeKitap());
     }
 
-
     private void fillViewKullanici(UyeKitap uyeKitap) {
         item = new BeanItem<UyeKitap>(uyeKitap);
         binder = new FieldGroup(item);
         binder.bindMemberFields(this);
     }
 
+    private void kullaniciList() {
+        KullaniciDao kullaniciDao = new KullaniciDao();
+        listKullanici = kullaniciDao.findAllUye();
+    }
 
     private void fillLayout() {
-        formLayout=new FormLayout();
+        formLayout = new FormLayout();
         formLayout.setMargin(true);
         formLayout.addStyleName("outlined");
         formLayout.setSizeFull();
         addComponent(formLayout);
 
-        KullaniciDao kullaniciDao = new KullaniciDao();
-        listKullanici = kullaniciDao.findAllUye();
-
-        kisiCombo= new ComboBox("Uye",listKullanici);
+        kullaniciList();
+        kisiCombo = new ComboBox("Uye", listKullanici);
         formLayout.addComponent(kisiCombo);
 
         Button ekleBtn=new Button();
@@ -64,7 +63,7 @@ public class AdminKisiListele extends VerticalLayout {
             public void buttonClick(Button.ClickEvent clickEvent) {
                     kullanici = (Kullanici) kisiCombo.getValue();
                     createTable();
-                    insertTable();
+                    fillTable();
             }
         });
         formLayout.addComponent(ekleBtn);
@@ -89,12 +88,12 @@ public class AdminKisiListele extends VerticalLayout {
        addComponent(formLayout);
     }
 
-    private  void insertTable(){
+    private  void fillTable(){
 
         try {
             binder.commit();
-            UyeKitap uyeKitap1= item.getBean();
-            kullanici=uyeKitap1.getKullanici();
+            UyeKitap kitapUye = item.getBean();
+            kullanici = kitapUye.getKullanici();
             UyeKitapDao uyeKitapDao = new UyeKitapDao();
             List<UyeKitap> uyeKitapList = uyeKitapDao.findAllKitapByKullanici(kullanici);
 

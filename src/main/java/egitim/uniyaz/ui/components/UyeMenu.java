@@ -3,28 +3,26 @@ package egitim.uniyaz.ui.components;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.themes.ValoTheme;
 import egitim.uniyaz.MyUI;
 import egitim.uniyaz.domain.Kullanici;
-import egitim.uniyaz.ui.views.*;
+import egitim.uniyaz.ui.views.KullaniciGirisView;
+import egitim.uniyaz.ui.views.UyeKitapGuncelle;
+import egitim.uniyaz.ui.views.UyeKitapSecView;
+import egitim.uniyaz.ui.views.UyeOkunanKitaplar;
 
 public class UyeMenu  extends HorizontalLayout {
-    private Header header;
     private Content content;
 
+    private MenuButton kitapEkleBtn;
+    private MenuButton kitapGuncelleBtn;
+    private MenuButton okunanKitaplarBtn;
+    private MenuButton kullaniciBtn;
 
-    MenuButton kitapEkleBtn;
-    MenuButton kitapGuncelleBtn;
-    MenuButton okunanKitaplarBtn;
-    MenuButton kullaniciBtn;
-
-    Kullanici kullanici = KullaniciGirisView.kullanici;
-    public UyeMenu(Header header,Content content) {
+    private Kullanici kullanici = KullaniciGirisView.kullanici;
+    public UyeMenu(Content content) {
 
         setHeight(100, Unit.PIXELS);
         setWidth(100, Unit.PERCENTAGE);
-        this.header = header;
         this.content=content;
 
         setSpacing(true);

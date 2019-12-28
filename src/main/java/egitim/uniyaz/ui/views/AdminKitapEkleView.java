@@ -15,23 +15,21 @@ import java.util.List;
 public class AdminKitapEkleView extends VerticalLayout {
 
     @PropertyId("id")
-    TextField idField;
+    private TextField idField;
 
     @PropertyId("yazar")
-    ComboBox yazarCombo;
+    private ComboBox yazarCombo;
 
     @PropertyId("name")
-    TextField kitapText;
+    private TextField kitapText;
 
-    List<Yazar> listYazar;
-    FormLayout formLayout=new FormLayout();
+    private List<Yazar> listYazar;
+    private FormLayout formLayout;
 
     private FieldGroup binder;
     private BeanItem<Kitap> item;
 
-
     public AdminKitapEkleView() {
-        yazarList();
         fillLayout();
         fillViewKitap(new Kitap());
     }
@@ -49,7 +47,7 @@ public class AdminKitapEkleView extends VerticalLayout {
 
 
     private void fillLayout() {
-        formLayout=new FormLayout();
+        formLayout = new FormLayout();
         formLayout.setMargin(true);
         formLayout.addStyleName("outlined");
         formLayout.setSizeFull();
@@ -58,7 +56,7 @@ public class AdminKitapEkleView extends VerticalLayout {
         idField.setEnabled(false);
         formLayout.addComponent(idField);
 
-
+        yazarList();
         yazarCombo = new ComboBox("Yazar",listYazar);
         formLayout.addComponent(yazarCombo);
 

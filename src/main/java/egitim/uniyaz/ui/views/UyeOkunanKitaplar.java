@@ -15,19 +15,18 @@ public class UyeOkunanKitaplar extends VerticalLayout {
     private Table table;
     private IndexedContainer indexedContainer;
 
-    FormLayout formLayout;
+    private FormLayout formLayout;
 
     Kullanici kullanici = KullaniciGirisView.kullanici;
 
     public UyeOkunanKitaplar() {
-
         createTable();
-        insertTable();
+        fillTable();
         addComponent(formLayout);
     }
 
     private  void createTable() {
-        formLayout=new FormLayout();
+        formLayout = new FormLayout();
         formLayout.setMargin(true);
         formLayout.addStyleName("outlined");
         formLayout.setSizeFull();
@@ -48,7 +47,7 @@ public class UyeOkunanKitaplar extends VerticalLayout {
     }
 
 
-    private  void insertTable(){
+    private  void fillTable(){
         UyeKitapDao uyeKitapDao = new UyeKitapDao();
         List<UyeKitap> uyeKitapList = uyeKitapDao.findFinishKitapByKullanici(kullanici);
 

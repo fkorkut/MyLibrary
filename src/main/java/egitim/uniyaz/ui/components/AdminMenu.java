@@ -3,8 +3,6 @@ package egitim.uniyaz.ui.components;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.themes.ValoTheme;
 import egitim.uniyaz.MyUI;
 import egitim.uniyaz.domain.Kullanici;
 import egitim.uniyaz.ui.views.AdminKisiListele;
@@ -14,25 +12,19 @@ import egitim.uniyaz.ui.views.KullaniciGirisView;
 
 public class AdminMenu extends HorizontalLayout {
 
-    private Header header;
     private Content content;
-
 
     MenuButton yazarEkleBtn;
     MenuButton kitapEkleBtn;
     MenuButton kisileriListeleBtn;
     MenuButton kullaniciBtn;
 
-
-
-
     Kullanici kullanici = KullaniciGirisView.kullanici;
 
-    public AdminMenu(Header header,Content content) {
+    public AdminMenu(Content content) {
         setHeight(100, Unit.PIXELS);
         setWidth(100, Unit.PERCENTAGE);
 
-        this.header = header;
         this.content=content;
 
         setSpacing(true);
@@ -53,7 +45,6 @@ public class AdminMenu extends HorizontalLayout {
             }
         });
         addComponent(yazarEkleBtn);
-
 
         kitapEkleBtn = new MenuButton(FontAwesome.PLUS);
         kitapEkleBtn.setCaption("Kitap Ekle");
@@ -90,10 +81,6 @@ public class AdminMenu extends HorizontalLayout {
             }
         });
        addComponent(kullaniciBtn);
-
-
-
     }
-
 }
 

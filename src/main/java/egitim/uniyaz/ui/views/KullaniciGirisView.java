@@ -18,9 +18,8 @@ public class KullaniciGirisView extends VerticalLayout {
     @PropertyId("kullaniciParola")
     private PasswordField  parolaTextField;
 
-    private  Button girisButon;
-
-    FormLayout formLayout=new FormLayout();
+    private Button girisButon;
+    private FormLayout formLayout;
 
     private FieldGroup binder;
     private BeanItem<Kullanici> item;
@@ -29,9 +28,7 @@ public class KullaniciGirisView extends VerticalLayout {
     public KullaniciGirisView() {
         fillLayout();
         fillViewKullanici(new Kullanici());
-
     }
-
 
     private void fillViewKullanici(Kullanici kullanici) {
         item = new BeanItem<Kullanici>(kullanici);
@@ -40,11 +37,10 @@ public class KullaniciGirisView extends VerticalLayout {
     }
 
     private void fillLayout()  {
-
+        formLayout = new FormLayout();
         formLayout.setMargin(true);
         formLayout.addStyleName("outlined");
         formLayout.setSizeFull();
-
 
         adTextField = new TextField();
         adTextField.setCaption("Ad");
@@ -89,7 +85,7 @@ public class KullaniciGirisView extends VerticalLayout {
             Kullanici kullanici = item.getBean();
 
             KullaniciDao kullaniciDao=new KullaniciDao();
-            kullanici=kullaniciDao.findKullanici(kullanici);
+            kullanici = kullaniciDao.findKullanici(kullanici);
             return kullanici;
 
         } catch (FieldGroup.CommitException e) {
@@ -97,6 +93,4 @@ public class KullaniciGirisView extends VerticalLayout {
             return  null;
         }
     }
-
-
 }
