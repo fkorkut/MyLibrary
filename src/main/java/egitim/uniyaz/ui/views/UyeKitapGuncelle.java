@@ -1,6 +1,8 @@
 package egitim.uniyaz.ui.views;
 
 import com.vaadin.data.Item;
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.*;
@@ -18,20 +20,21 @@ public class UyeKitapGuncelle extends VerticalLayout {
 
     FormLayout formLayout;
 
-
+    private FieldGroup binder;
+    private BeanItem<UyeKitap> item;
     private ComboBox okumaStateCombo;
 
 private  UyeKitap uyeKitap;
     Kullanici kullanici = KullaniciGirisView.kullanici;
 
     public UyeKitapGuncelle() {
-
         createTable();
-        insertTable();
+        fillTable();
         createCombos();
         createButton();
         addComponent(formLayout);
     }
+
 
     private  void createTable() {
         formLayout=new FormLayout();
@@ -63,23 +66,24 @@ private  UyeKitap uyeKitap;
     }
 
 
-    private  void insertTable(){
-        UyeKitapDao uyeKitapDao = new UyeKitapDao();
+    private  void fillTable(){
+            UyeKitapDao uyeKitapDao = new UyeKitapDao();
 
-        List<UyeKitap> uyeKitapList = uyeKitapDao.findAllKitapByKullanici(kullanici);
+            List<UyeKitap> uyeKitapList = uyeKitapDao.findAllKitapByKullanici(kullanici);
 
-        for (UyeKitap uyeKitap : uyeKitapList) {
+            for (UyeKitap uyeKitap : uyeKitapList) {
 
-          if(KitapOkumaState.Okudum != uyeKitap.getKitapOkumaState()) {
+                if(KitapOkumaState.Okudum != uyeKitap.getKitapOkumaState()) {
 
-              Item item = indexedContainer.addItem(uyeKitap);
+                    Item item = indexedContainer.addItem(uyeKitap);
 
-              item.getItemProperty("Kitap").setValue(uyeKitap.getKitap().getName());
-              item.getItemProperty("OkumaState").setValue(uyeKitap.getKitapOkumaState());
+                    item.getItemProperty("Kitap").setValue(uyeKitap.getKitap().getName());
+                    item.getItemProperty("OkumaState").setValue(uyeKitap.getKitapOkumaState());
 
-          }
+                }
 
-        }
+            }
+//
     }
 
     private  void createButton(){
